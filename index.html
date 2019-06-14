@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+        <div>
+                <p id="directions-text">Press a letter to start playing!</p>
+                <p id="userletter-text"></p>
+        </div>
+        <script type="text/javascript">
+            // Computer Guesses and user picks a letter.
+            var randomWord = ["cat", "old", "ego", "sit", "tug"];
+            var computerWord = computerChoices[Math.floor(Math.random() * randomWord.length)];
+            var userLetter = document.getElementById("userletter-text");
+        
+            // Creating variables to hold the number of wins and losses. They start at 0. Guesses start at 10.
+            var wins = 0;
+            var losses = 0;
+            var guessLeft = 10;
+
+
+
+            // User event when a letter is guessed.
+
+            document.onkeyup = function(event) {
+                var userLetter = event.key;
+
+
+
+            }
+            var check = computerWord.includes(userLetter)
+            //end of event when a letter is guessed.
+
+
+
+
+
+
+
+
+
+
+
+
+        </script>
+
+
+    
+</body>
+</html>
