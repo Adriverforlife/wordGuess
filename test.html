@@ -10,7 +10,6 @@
 
 <body>
     <div id="div1">
-        <p>This is a test</p>
         <p>Length of Word</p>
         <p id="length"></p>
         <p>Guesses left</p>
@@ -22,53 +21,17 @@
 
     </div>
     <script>
-        var chars = "overpopulation".split('');
+/* String to split. */
+String str = "one-two-three";
+String[] temp;
 
-
-
-        console.log(chars)
-
-        var randomWord = ["cat", "old", "ego", "sit", "tug"];
-        var computerWord = randomWord[Math.floor(Math.random() * randomWord.length)];
-        var userLetter = document.getElementById("userletter-text");
-        var wordsplit = computerWord.split('');
-        var node = "a"
-        var guessLeft = 10;
-
-        console.log(wordsplit);
-
-
-        document.getElementById("length").innerHTML = wordsplit.length;
-        for (i = 0; i < wordsplit.length; i++) {
-            var j = document.getElementById("length");
-            var lode = document.createTextNode("_ ");
-            j.appendChild(lode);
-        }
-
-        for (i = 0; i < wordsplit.length; i++) {
-            var ltr = document.createElement("div");
-            var node = document.createTextNode("x");
-            ltr.appendChild(node);
-            var element = document.getElementById("div1");
-            element.appendChild(ltr);
-
-
-        }
-
-        document.onkeyup = function (event) {
-            var userLetter = event.key;
-            var check = computerWord.includes(userLetter);
-            if (check) {
-                ltr.append(userLetter)
-            }
-            else {
-                guessLeft = guessLeft - 1;
-                document.getElementById("gl").innerHTML = guessLeft;
-
-
-            }
-
-        }
+/* delimiter */
+String delimiter = "-";
+/* given string will be split by the argument delimiter provided. */
+temp = str.split(delimiter);
+/* print substrings */
+for(int i =0; i < temp.length ; i++)
+  System.out.println(temp[i]);
 
     </script>
 

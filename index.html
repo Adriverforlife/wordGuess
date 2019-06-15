@@ -23,6 +23,8 @@
             <p id="wns"></p>
             <p>lost</p>
             <p id="lost"></p>
+            <p>Guessed Letters</p>
+            <div id="guessedLetters"></div>
         </div>
 
     </div>
@@ -35,9 +37,13 @@
     <script type="text/javascript">
         // Computer Guesses and user picks a letter.
         var randomWord = ["cat", "old", "ego", "sit", "tug"];
-        var computerWord = randomWord[Math.floor(Math.random() * randomWord.length)];
+        var computerWord;
+        var wordsplit;
+        var j;
+        var lode;
         var userLetter = document.getElementById("userletter-text");
-        var wordsplit = computerWord.split('');
+
+
 
         // Creating variables to hold the number of wins and losses. They start at 0. Guesses start at 10.
         var wins = 0;
@@ -45,67 +51,105 @@
         var guessLeft = 10;
         var wordSpace = [];
         var mostGuess = 10;
+        var corLet = [];
+        var allGuess = [];
 
 
 
+        resetG()
         // User event when a letter is guessed.
 
         document.onkeyup = function (event) {
             var userLetter = event.key;
-            var check = computerWord.includes(userLetter);
-            if (check) {
-                var p = wordsplit.indexOf(userLetter);
-                wordSpace.splice(p, 1, userLetter);
+            var letters = /[a-z]/;
+            if ((event.keyCode > 64) && (event.keyCode < 91)) {
+                allGuess.push(userLetter);
+                console.log(allGuess)
+                document.getElementById("guessedLetters").innerHTML = allGuess;
+                console.log(userLetter);
 
-                j.innerHTML = wordSpace.join(" ");
-                if (wordSpace.join("") === computerWord){
-                    wins = wins + 1;
-                    document.getElementById("wns").innerHTML = wins;
+                var check = computerWord.includes(userLetter);
+                if (check) {
+                    var p = wordsplit.indexOf(userLetter);
+                    wordSpace.splice(p, 1, userLetter);
+                    corLet.push(userLetter);
+                    console.log(corLet)
+                    j.innerHTML = wordSpace.join(" ");
+
+                    //win condition
+                    if (corLet.length == wordSpace.length) {
+                        wins = wins + 1;
+                        document.getElementById("wns").innerHTML = wins;
+                        console.log(wins);
+                        resetG();
+
+                    }
+
+
+                }
+                else {
+                    guessLeft = guessLeft - 1;
+                    document.getElementById("gl").innerHTML = guessLeft;
+                    //endgame condition
+                    if (guessLeft === 0) {
+                        losses = losses + 1;
+                        document.getElementById("lost").innerHTML = losses;
+                        document.getElementById("gl").innerHTML = guessLeft;
+                        console.log(losses);
+                        resetG();
+
+
+
+                    };
+
+
                 }
             }
-            else {
-                guessLeft = guessLeft - 1;
-                document.getElementById("gl").innerHTML = guessLeft;
-                //endgame condition
-                if (guessLeft === 0) {
-            losses = losses + 1;
-            document.getElementById("lost").innerHTML = losses;
-            guessLeft = mostGuess;
-            document.getElementById("gl").innerHTML = guessLeft;
-            console.log(losses)
-        };
 
 
-            }
         }
+
 
         //end of event when a letter is guessed.
 
-        console.log("test")
         //start of game
-        for (i = 0; i < wordsplit.length; i++) {
-            var j = document.getElementById("length");
-            var lode = document.createTextNode("_ ");
-            wordSpace.push("_");
-        }
-        document.getElementById("length").innerText = wordSpace.join(" ")
-
-
-
-
-
-
-
-        console.log(computerWord);
-        console.log(wordsplit);
-        //endgame conditions
-        if (guessLeft === 0) {
-            losses = losses + 1;
-            document.getElementById("lost").innerHTML = losses;
+        function resetG() {
+            computerWord = randomWord[Math.floor(Math.random() * randomWord.length)];
+            wordsplit = computerWord.split('');
+            console.log(computerWord);
+            corLet = [];
+            wordSpace = [];
+            allGuess = [];
+            document.getElementById("guessedLetters").innerHTML = allGuess;
             guessLeft = mostGuess;
             document.getElementById("gl").innerHTML = guessLeft;
-            console.log(losses)
+
+
+
+
+
+
+
+            j = document.getElementById("length");
+            lode = document.createTextNode("_ ");
+            for (i = 0; i < wordsplit.length; i++) {
+
+                wordSpace.push("_");
+            }
+            document.getElementById("length").innerText = wordSpace.join(" ")
         }
+
+
+
+
+
+
+
+
+
+        //endgame conditions
+
+
     </script>
 
 
