@@ -9,6 +9,13 @@
 </head>
 
 <body>
+    <div id="div1">
+        <p>This is a test</p>
+        <p>Guesses left</p>
+        <div id="gl">10</div>
+
+
+    </div>
     <script>
         var chars = "overpopulation".split('');
 
@@ -20,8 +27,36 @@
         var computerWord = randomWord[Math.floor(Math.random() * randomWord.length)];
         var userLetter = document.getElementById("userletter-text");
         var wordsplit = computerWord.split('');
-        console.log(wordsplit)
+        var node = "a"
+        var guessLeft = 10;
 
+        console.log(wordsplit);
+        for(i=0;i<wordsplit.length;i++ ) {
+            var ltr = document.createElement("div");
+            var node = document.createTextNode("x");
+            var element = document.getElementById("div1");
+            ltr.appendChild(node);
+            element.appendChild(ltr);
+
+
+        }
+
+        document.onkeyup = function (event) {
+            var userLetter = event.key;
+            var check = computerWord.includes(userLetter);
+            if (check) {
+                ltr.append(userLetter)
+            }
+           else{
+               guessLeft = guessLeft -1;
+               alert(guessLeft);
+               document.getElementById("gl").innerHTML=guessLeft;
+               
+
+           }
+
+
+        }
     </script>
 
 </body>
