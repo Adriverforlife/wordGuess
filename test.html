@@ -11,6 +11,8 @@
 <body>
     <div id="div1">
         <p>This is a test</p>
+        <p>Length of Word</p>
+        <p id="length"></p>
         <p>Guesses left</p>
         <div id="gl">10</div>
         <div id=div2>
@@ -34,9 +36,19 @@
         var guessLeft = 10;
 
         console.log(wordsplit);
-        for(i=0;i<wordsplit.length;i++ ) {
+
+
+        document.getElementById("length").innerHTML = wordsplit.length;
+        for (i = 0; i < wordsplit.length; i++) {
+            var j = document.getElementById("length");
+            var lode = document.createTextNode("_ ");
+            j.appendChild(lode);
+        }
+
+        for (i = 0; i < wordsplit.length; i++) {
             var ltr = document.createElement("div");
             var node = document.createTextNode("x");
+            ltr.appendChild(node);
             var element = document.getElementById("div1");
             element.appendChild(ltr);
 
@@ -49,12 +61,12 @@
             if (check) {
                 ltr.append(userLetter)
             }
-           else{
-               guessLeft = guessLeft -1;
-               document.getElementById("gl").innerHTML=guessLeft;
-               
+            else {
+                guessLeft = guessLeft - 1;
+                document.getElementById("gl").innerHTML = guessLeft;
 
-           }
+
+            }
 
         }
 

@@ -9,6 +9,23 @@
 </head>
 
 <body>
+    <div id="div1">
+        <p>Length of Word</p>
+        <h2 id="length"></h2>
+        <p>Guesses left</p>
+        <div id="gl">10</div>
+        <div id=div2>
+
+        </div>
+        <div>
+            <h1>Score</h1>
+            <p>won</p>
+            <p id="wns"></p>
+            <p>lost</p>
+            <p id="lost"></p>
+        </div>
+
+    </div>
 
 
     <div>
@@ -21,11 +38,13 @@
         var computerWord = randomWord[Math.floor(Math.random() * randomWord.length)];
         var userLetter = document.getElementById("userletter-text");
         var wordsplit = computerWord.split('');
-        
+
         // Creating variables to hold the number of wins and losses. They start at 0. Guesses start at 10.
         var wins = 0;
         var losses = 0;
         var guessLeft = 10;
+        var wordSpace = [];
+        var mostGuess = 10;
 
 
 
@@ -34,17 +53,42 @@
         document.onkeyup = function (event) {
             var userLetter = event.key;
             var check = computerWord.includes(userLetter);
-            
-            console.log(check);
+            if (check) {
+                var p = wordsplit.indexOf(userLetter);
+                wordSpace.splice(p, 1, userLetter);
+
+                j.innerHTML = wordSpace.join(" ");
+                if (wordSpace === computerWord){
+                    wins = wins + 1;
+                    document.getElementById("wns").innerHTML = wins;
+                }
+            }
+            else {
+                guessLeft = guessLeft - 1;
+                document.getElementById("gl").innerHTML = guessLeft;
+                //endgame condition
+                if (guessLeft === 0) {
+            losses = losses + 1;
+            document.getElementById("lost").innerHTML = losses;
+            guessLeft = mostGuess;
+            document.getElementById("gl").innerHTML = guessLeft;
+            console.log(losses)
+        };
 
 
-
+            }
         }
-        
-            //end of event when a letter is guessed.
 
+        //end of event when a letter is guessed.
 
-
+        console.log("test")
+        //start of game
+        for (i = 0; i < wordsplit.length; i++) {
+            var j = document.getElementById("length");
+            var lode = document.createTextNode("_ ");
+            wordSpace.push("_");
+        }
+        document.getElementById("length").innerText = wordSpace.join(" ")
 
 
 
@@ -54,7 +98,14 @@
 
         console.log(computerWord);
         console.log(wordsplit);
-
+        //endgame conditions
+        if (guessLeft === 0) {
+            losses = losses + 1;
+            document.getElementById("lost").innerHTML = losses;
+            guessLeft = mostGuess;
+            document.getElementById("gl").innerHTML = guessLeft;
+            console.log(losses)
+        }
     </script>
 
 
