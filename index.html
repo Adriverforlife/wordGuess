@@ -58,7 +58,7 @@
                 wordSpace.splice(p, 1, userLetter);
 
                 j.innerHTML = wordSpace.join(" ");
-                if (wordSpace === computerWord){
+                if (wordSpace.join("") === computerWord){
                     wins = wins + 1;
                     document.getElementById("wns").innerHTML = wins;
                 }
