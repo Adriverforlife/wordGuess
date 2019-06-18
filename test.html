@@ -6,39 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <div id="div1">
-        <p>Length of Word</p>
-        <h2 style="text-transform: uppercase" id="length"></h2>
-        <p>Guesses left</p>
-        <div id="gl">10</div>
-        <div id=div2>
+    <div class="container">
+        <div class="row justify-content-between border-bottom" style="margin:0px 0px 20px;background-color:black;">
 
+            <div class="col-md-4" style="background-color:black">
+                <div class="row justify-content-center">
+                    <h1 class="bold">Word Guess</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row justify-content-med-end justify-content-center" style="margin: 10px; ">
+                    <h2 style="color: snow">Car Brand Edition</h2>
+                </div>
+            </div>
         </div>
-        <div>
-            <h1>Score</h1>
-            <p>won</p>
-            <p id="wns"></p>
-            <p>lost</p>
-            <p id="lost"></p>
-            <p>Guessed Letters</p>
-            <div id="guessedLetters"></div>
-        </div>
+        <div class="col-12">
+            <div class="jumbotron" style="background-color: lightslategray">
+                <div id="div1">
 
+                    <h1>Guess the Word</h1>
+                    <h1 style="text-transform: uppercase" id="length"></h1>
+                    <h2>Guesses left</h2>
+                    <h2>
+                        <div id="gl"></div>
+                        <div id=div2>
+
+                        </div>
+                        <div>
+                            <h1>Score</h1>
+                            <p>won</p>
+                            <p id="wns">0</p>
+                            <p>lost</p>
+                            <p id="lost">0</p>
+                            <p>Guessed Letters</p>
+                            <div id="guessedLetters"> </div>
+
+                        </div>
+                    </h2>
+
+                </div>
+
+
+                <div>
+                    <p id="directions-text">Press a letter to start playing!</p>
+                    <p id="userletter-text"></p>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar fixed-bottom navbar-light bg-dark justify-content-center">
+            <a class="navbar-brand" style="padding: 10px" href="#">@copyright</a>
+        </nav>
     </div>
 
 
-    <div>
-        <p id="directions-text">Press a letter to start playing!</p>
-        <p id="userletter-text"></p>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+
     <script type="text/javascript">
         // Computer Guesses and user picks a letter.
         var randomWord = ["porsche", "ferrari", "vw", "toyota", "mercedes", "bmw", "lamborghini", "fiat", "mazda", "honda", "subaru", "nissan", "chevrolet", "ford", "dodge"];
         var computerWord;
-        var wordsplit;
+        var wordsplit = [];
         var j;
         var lode;
         var userLetter;
@@ -54,15 +98,24 @@
         var corLet = [];
         var allGuess = [];
         var evKey = [];
+
         //sound effects
         var winSd = document.createElement("audio");
-        var lSd = document.createElement("audo");
+        var WSd = document.createElement("audio");
         winSd.setAttribute("src", "assets/sounds/correct.wav")
-        lSd.setAttribute("src", "assets/sounds/incorrect.wav")
+        WSd.setAttribute("src", "assets/sounds/win.wav")
+        var lSd = document.createElement("audio");
+        lSd.setAttribute("src", "assets/sounds/lose.wav")
+
+
+
 
 
         resetG()
         // User event when a letter is guessed.
+
+
+
 
         document.onkeyup = function (event) {
             var userLetter = event.key;
@@ -70,23 +123,36 @@
                 allGuess.push(userLetter);
                 document.getElementById("guessedLetters").innerHTML = allGuess;
 
-
                 var check = computerWord.includes(userLetter);
-               
+                var numofChar = computerWord
                 if (check) {
                     var p = wordsplit.indexOf(userLetter);
-                    wordSpace.splice(p, 1, userLetter);
+                    for (i = 0; i <= wordsplit.length; i++) {
+                        if(wordsplit[i] === userLetter){
+                        wordSpace.splice([i], 1, userLetter);
+                        j.innerHTML = wordSpace.join(" ");
+                    }
+                    }
                     corLet.push(userLetter);
-                    console.log(corLet)
-                    j.innerHTML = wordSpace.join(" ");
+                   
                     winSd.play();
 
+                    getAllIndexes(wordsplit, userLetter);
+                    console.log(evKey);
+
+                    console.log(corLet);
+
+
+
+
                     //win condition
-                    if (corLet.length == wordSpace.length) {
+                    if (evKey.length == wordSpace.length) {
                         wins = wins + 1;
                         document.getElementById("wns").innerHTML = wins;
                         console.log(wins);
                         resetG();
+                        WSd.play();
+
 
                     }
 
@@ -95,6 +161,7 @@
                 else {
                     guessLeft = guessLeft - 1;
                     document.getElementById("gl").innerHTML = guessLeft;
+
                     //endgame condition
                     if (guessLeft === 0) {
                         losses = losses + 1;
@@ -102,6 +169,8 @@
                         document.getElementById("gl").innerHTML = guessLeft;
                         console.log(losses);
                         resetG();
+                        lSd.play();
+
 
 
 
@@ -123,6 +192,7 @@
             wordsplit = computerWord.split('');
             console.log(computerWord);
             corLet = [];
+            evKey = [];
             wordSpace = [];
             allGuess = [];
             document.getElementById("guessedLetters").innerHTML = allGuess;
@@ -144,7 +214,19 @@
             document.getElementById("length").innerText = wordSpace.join(" ")
         }
 
+        function getAllIndexes(arr, val) {
+            var indexes = [], i;
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i] === val)
+                    evKey.push(i);
 
+
+
+
+
+
+            }
+        }
 
 
 
@@ -154,18 +236,6 @@
 
         //endgame conditions
 
-        function countInArray(array, what) {
-            var countest = 0;
-            var awk = [];
-            for (var i = 0; i < array.length; i++) {
-                if (array[i] === what) {
-                    countest++;
-                    awk.push(i);
-                }
-            }
-            console.log(countest);
-            console.log(awk);
-        }
 
     </script>
 

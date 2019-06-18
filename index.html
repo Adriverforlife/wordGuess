@@ -14,39 +14,42 @@
 
 <body>
     <div class="container">
-        <div class="row justify-content-between border-bottom" style="margin:0px 0px 20px;background-color:black">
+        <div class="row justify-content-between border-bottom" style="margin:0px 0px 20px;background-color:black;">
 
             <div class="col-md-4" style="background-color:black">
                 <div class="row justify-content-center">
-                    <h1 class = "bold">Word Guess</h1>
+                    <h1 class="bold">Word Guess</h1>
                 </div>
             </div>
             <div class="col-md-4">
-                    <div class="row justify-content-med-end justify-content-center" style="margin: 10px">
-                            <h2 style="color: snow">Car Brand Edition</h2>
-                        </div>
+                <div class="row justify-content-med-end justify-content-center" style="margin: 10px; ">
+                    <h2 style="color: snow">Car Brand Edition</h2>
+                </div>
+            </div>
         </div>
         <div class="col-12">
-            <div class="jumbotron">
+            <div class="jumbotron" style="background-color: lightslategray">
                 <div id="div1">
 
                     <h1>Guess the Word</h1>
                     <h1 style="text-transform: uppercase" id="length"></h1>
                     <h2>Guesses left</h2>
-                    <h2><div id="gl"></div>
-                    <div id=div2>
+                    <h2>
+                        <div id="gl"></div>
+                        <div id=div2>
 
-                    </div>
-                    <div>
-                        <h1>Score</h1>
-                        <p>won</p>
-                        <p id="wns">0</p>
-                        <p>lost</p>
-                        <p id="lost">0</p>
-                        <p>Guessed Letters</p>
-                        <div id="guessedLetters"> </div>
-                    
-                    </div></h2>
+                        </div>
+                        <div>
+                            <h1>Score</h1>
+                            <p>won</p>
+                            <p id="wns">0</p>
+                            <p>lost</p>
+                            <p id="lost">0</p>
+                            <p>Guessed Letters</p>
+                            <div id="guessedLetters"> </div>
+
+                        </div>
+                    </h2>
 
                 </div>
 
@@ -57,6 +60,9 @@
                 </div>
             </div>
         </div>
+        <nav class="navbar fixed-bottom navbar-light bg-dark justify-content-center">
+            <a class="navbar-brand" style="padding: 10px" href="#">@copyright</a>
+        </nav>
     </div>
 
 
@@ -76,7 +82,7 @@
         // Computer Guesses and user picks a letter.
         var randomWord = ["porsche", "ferrari", "vw", "toyota", "mercedes", "bmw", "lamborghini", "fiat", "mazda", "honda", "subaru", "nissan", "chevrolet", "ford", "dodge"];
         var computerWord;
-        var wordsplit;
+        var wordsplit = [];
         var j;
         var lode;
         var userLetter;
@@ -108,28 +114,39 @@
         resetG()
         // User event when a letter is guessed.
 
+
+
+
         document.onkeyup = function (event) {
             var userLetter = event.key;
             if ((event.keyCode > 64) && (event.keyCode < 91) && !allGuess.includes(userLetter)) {
                 allGuess.push(userLetter);
-                console.log(allGuess)
                 document.getElementById("guessedLetters").innerHTML = allGuess;
-                console.log(userLetter);
 
                 var check = computerWord.includes(userLetter);
                 var numofChar = computerWord
                 if (check) {
                     var p = wordsplit.indexOf(userLetter);
-                    wordSpace.splice(p, 1, userLetter);
+                    for (i = 0; i <= wordsplit.length; i++) {
+                        if(wordsplit[i] === userLetter){
+                        wordSpace.splice([i], 1, userLetter);
+                        j.innerHTML = wordSpace.join(" ");
+                    }
+                    }
                     corLet.push(userLetter);
-                    console.log(corLet)
-                    j.innerHTML = wordSpace.join(" ");
+                   
                     winSd.play();
+
+                    getAllIndexes(wordsplit, userLetter);
+                    console.log(evKey);
+
+                    console.log(corLet);
+
 
 
 
                     //win condition
-                    if (corLet.length == wordSpace.length) {
+                    if (evKey.length == wordSpace.length) {
                         wins = wins + 1;
                         document.getElementById("wns").innerHTML = wins;
                         console.log(wins);
@@ -175,6 +192,7 @@
             wordsplit = computerWord.split('');
             console.log(computerWord);
             corLet = [];
+            evKey = [];
             wordSpace = [];
             allGuess = [];
             document.getElementById("guessedLetters").innerHTML = allGuess;
@@ -196,7 +214,19 @@
             document.getElementById("length").innerText = wordSpace.join(" ")
         }
 
+        function getAllIndexes(arr, val) {
+            var indexes = [], i;
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i] === val)
+                    evKey.push(i);
 
+
+
+
+
+
+            }
+        }
 
 
 
